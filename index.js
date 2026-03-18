@@ -323,7 +323,7 @@ async function testAPIKey() {
       system:
         "You are a minimal connectivity check. Reply with exactly: ok (lowercase).",
       user: "ok",
-      maxOutputTokens: 8,
+      maxOutputTokens: 16,
       temperature: 0,
     });
 
