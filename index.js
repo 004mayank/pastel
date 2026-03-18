@@ -370,6 +370,10 @@ function localClean(text) {
   // Normalize line endings
   t = t.replace(/\r\n?/g, "\n");
 
+  // Replace em/en dashes (and double-hyphen) with comma separators for a cleaner, less "AI-ish" look.
+  // Note: this is heuristic; Standard mode intentionally avoids stylistic dashes.
+  t = t.replace(/\s*(?:--|—|–)\s*/g, ", ");
+
   // Trim each line + collapse excessive inner whitespace
   t = t
     .split("\n")
@@ -383,6 +387,9 @@ function localClean(text) {
   t = t
     .replace(/\s+([,.;:!?])/g, "$1")
     .replace(/([,.;:!?])(?!\s|\n|$)/g, "$1 ");
+
+  // Clean up any accidental duplicate commas from dash replacement
+  t = t.replace(/,\s*(,\s*)+/g, ", ");
 
   // Fix duplicated punctuation like "!!" or "??" (do not rewrite dashes/ellipses)
   t = t
