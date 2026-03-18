@@ -509,8 +509,13 @@ body {
 
 .split {
   display: grid;
-  grid-template-columns: 1fr 1px 1fr;
+  grid-template-columns: 1fr 1fr;
   min-height: 480px;
+}
+
+/* Use a border instead of a dedicated 1px grid column to avoid subpixel "mystery" lines */
+.split > .pane:last-child {
+  border-left: 1px solid var(--stroke);
 }
 
 .pane {
@@ -562,7 +567,7 @@ body {
 }
 
 .divider {
-  background: var(--stroke);
+  display: none;
 }
 
 .output {
@@ -669,12 +674,12 @@ body {
 
   .split {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1px 1fr;
+    grid-template-rows: 1fr 1fr;
   }
 
-  .divider {
-    height: 1px;
-    width: 100%;
+  .split > .pane:last-child {
+    border-left: 0;
+    border-top: 1px solid var(--stroke);
   }
 
   .segmented__label {
