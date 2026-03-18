@@ -68,9 +68,15 @@ body {
   font-family: var(--font);
   color: var(--text);
   background:
-    radial-gradient(900px 600px at 20% 0%, rgba(123, 140, 255, 0.16), transparent 55%),
-    radial-gradient(900px 700px at 80% 0%, rgba(110, 226, 197, 0.10), transparent 55%),
-    linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 45%, var(--bg2) 100%);
+    radial-gradient(900px 600px at 20% 0%, rgba(123, 140, 255, 0.16), transparent 60%),
+    radial-gradient(900px 700px at 80% 0%, rgba(110, 226, 197, 0.10), transparent 60%),
+    linear-gradient(
+      180deg,
+      var(--bg0) 0%,
+      var(--bg1) 38%,
+      var(--bg1) 72%,
+      var(--bg2) 100%
+    );
   transition:
     background var(--t) var(--ease),
     color var(--t) var(--ease);
