@@ -69,6 +69,10 @@ let state = {
   apiKey: "",
   apiKeyState: "missing",
   processing: false,
+
+  // For AI mode auto-rerun on option changes (after user has processed once)
+  aiHasRun: false,
+  lastAIInput: "",
 };
 
 function safeGet(key, fallback = "") {
@@ -226,6 +230,10 @@ function handleActionSelect(action) {
   if (!PROMPTS[action]) return;
   applyAction(action);
   safeSet(STORAGE.action, action);
+
+  // AI convenience: after the user has run AI once, changing the action re-processes automatically
+  // (without needing another click on Process).
+  maybeAutoProcessAI("action-change");
 }
 
 function applyAction(action) {
@@ -407,6 +415,32 @@ function localClean(text) {
   return t;
 }
 
+// ---------------------- AI auto-rerun (UX) ----------------------
+
+let aiAutoTimer = null;
+
+function maybeAutoProcessAI(reason = "") {
+  // Only auto-run when:
+  // - user is in AI mode
+  // - key is valid
+  // - user has already run AI at least once
+  // - current input matches the last processed AI input (so we don't re-run while typing)
+  if (state.mode !== "ai") return;
+  if (!hasValidKey()) return;
+  if (!state.aiHasRun) return;
+
+  const input = (el.inputText.value || "").trim();
+  if (!input) return;
+  if (input !== state.lastAIInput) return;
+  if (state.processing) return;
+
+  // Debounce to avoid multiple rapid calls when the user clicks around.
+  if (aiAutoTimer) window.clearTimeout(aiAutoTimer);
+  aiAutoTimer = window.setTimeout(() => {
+    processText();
+  }, 250);
+}
+
 async function processText() {
   const input = (el.inputText.value || "").trim();
   if (!input) {
@@ -468,6 +502,10 @@ async function processText() {
     cleaned = normalizeDashes(cleaned);
 
     setOutput(cleaned);
+
+    // Mark that AI has run once; enables auto-rerun on option changes (e.g., action pills).
+    state.aiHasRun = true;
+    state.lastAIInput = input;
   } catch (err) {
     const msg = humanError(err);
     setInlineError(msg);
