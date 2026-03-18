@@ -1,6 +1,6 @@
 # Pastel
 
-**Pastel** is a local-first writing cleaner that turns AI-sounding text into crisp, natural copy — with a calm, modern UI.
+**Pastel** is a local-first writing cleaner that turns AI-sounding text into crisp, natural copy - with a calm, modern UI.
 
 - **100% local UI** (no backend)
 - **Standard Mode**: instant cleanup on-device
