@@ -30,7 +30,7 @@ const PROMPTS = {
 };
 
 const OUTPUT_RULES =
-  "Output rules: Return ONLY the processed text. Do not add explanations. Do not prefix with any lead-in. Preserve formatting where possible.";
+  "Output rules: Return ONLY the processed text. Do not add explanations. Do not prefix with any lead-in. Preserve formatting where possible. Avoid em dashes (—) and en dashes (–); use commas, semicolons, or periods instead.";
 
 const el = {
   app: document.getElementById("app"),
@@ -363,6 +363,12 @@ function getOutputText() {
 
 // ---------------------- Processing ----------------------
 
+function normalizeDashes(text) {
+  // Converts em/en dashes and double-hyphens into comma separators.
+  // Intentionally leaves normal hyphens alone.
+  return String(text).replace(/\s*(?:--|—|–)\s*/g, ", ");
+}
+
 function localClean(text) {
   if (!text) return "";
   let t = String(text);
@@ -370,9 +376,8 @@ function localClean(text) {
   // Normalize line endings
   t = t.replace(/\r\n?/g, "\n");
 
-  // Replace em/en dashes (and double-hyphen) with comma separators for a cleaner, less "AI-ish" look.
-  // Note: this is heuristic; Standard mode intentionally avoids stylistic dashes.
-  t = t.replace(/\s*(?:--|—|–)\s*/g, ", ");
+  // Standard mode intentionally avoids stylistic dashes.
+  t = normalizeDashes(t);
 
   // Trim each line + collapse excessive inner whitespace
   t = t
@@ -456,8 +461,11 @@ async function processText() {
       temperature: 0.4,
     });
 
-    const cleaned = (out || "").trim();
+    let cleaned = (out || "").trim();
     if (!cleaned) throw new Error("Empty output received.");
+
+    // Apply the same dash normalization in AI mode for consistent output.
+    cleaned = normalizeDashes(cleaned);
 
     setOutput(cleaned);
   } catch (err) {
