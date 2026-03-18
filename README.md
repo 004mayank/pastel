@@ -71,7 +71,3 @@ Then open:
 - No build step required
 
 ---
-
-## License
-
-MIT (or update as needed)
