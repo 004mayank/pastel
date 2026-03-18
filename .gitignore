@@ -1,0 +1,5 @@
+# Pastel (static)
+.DS_Store
+*.log
+node_modules/
+.dist/
