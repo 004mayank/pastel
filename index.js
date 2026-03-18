@@ -60,8 +60,6 @@ const el = {
 
   inCount: document.getElementById("inCount"),
 
-  btnClear: document.getElementById("btnClear"),
-  btnSwap: document.getElementById("btnSwap"),
 };
 
 let state = {
@@ -255,9 +253,7 @@ function initAPIKey() {
   }
 
   // If there's a stored key but no stored verdict, mark as "Not added" until tested.
-  if (state.apiKey && state.apiKeyState === "missing") {
-    state.apiKeyState = "invalid"; // conservative until tested
-  }
+  // If a key exists but hasn't been tested, keep state as "missing" (Not added) until Test Key.
 
   syncKeyStatus();
 }
@@ -278,7 +274,7 @@ function handleAPIKeySave() {
 
   safeSet(STORAGE.apiKey, k);
   // Don't claim validity before testing.
-  state.apiKeyState = "invalid";
+  state.apiKeyState = "missing";
   safeSet(STORAGE.apiKeyState, state.apiKeyState);
   syncKeyStatus();
   setKeyMessage("Saved. Click ‘Test Key’ to verify.");
@@ -388,10 +384,8 @@ function localClean(text) {
     .replace(/\s+([,.;:!?])/g, "$1")
     .replace(/([,.;:!?])(?!\s|\n|$)/g, "$1 ");
 
-  // Fix duplicated punctuation like "!!" or ".." (keep ellipsis)
+  // Fix duplicated punctuation like "!!" or "??" (do not rewrite dashes/ellipses)
   t = t
-    .replace(/\.{4,}/g, "…")
-    .replace(/\.\.\./g, "…")
     .replace(/!{2,}/g, "!")
     .replace(/\?{2,}/g, "?");
 
@@ -486,11 +480,11 @@ async function callOpenAI({
     input: [
       {
         role: "system",
-        content: [{ type: "text", text: system }],
+        content: [{ type: "input_text", text: system }],
       },
       {
         role: "user",
-        content: [{ type: "text", text: user }],
+        content: [{ type: "input_text", text: user }],
       },
     ],
     max_output_tokens: maxOutputTokens,
@@ -604,25 +598,6 @@ function updateCounts() {
   el.inCount.textContent = String((el.inputText.value || "").length);
 }
 
-function clearAll() {
-  el.inputText.value = "";
-  updateCounts();
-  setInlineError("");
-  setOutput("");
-  if (state.mode === "ai" && !hasValidKey()) showEmptyState();
-}
-
-function swapInOut() {
-  const out = getOutputText();
-  const inText = el.inputText.value || "";
-
-  // If output is placeholder/empty state, do nothing.
-  if (!out.trim() || out.includes("Cleaned text will appear here")) return;
-
-  el.inputText.value = out;
-  updateCounts();
-  setOutput(inText.trim());
-}
 
 // ---------------------- Init + events ----------------------
 
@@ -670,8 +645,6 @@ function wireEvents() {
     }
   });
 
-  el.btnClear.addEventListener("click", clearAll);
-  el.btnSwap.addEventListener("click", swapInOut);
 }
 
 function boot() {
