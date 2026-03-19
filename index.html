@@ -78,7 +78,20 @@
               <button class="pill" type="button" data-action="rewrite" role="tab" aria-selected="false">Rewrite</button>
               <button class="pill" type="button" data-action="shorten" role="tab" aria-selected="false">Shorten</button>
               <button class="pill" type="button" data-action="fix_grammar" role="tab" aria-selected="false">Fix Grammar</button>
+              <button class="pill" type="button" data-action="ai_detect" role="tab" aria-selected="false">AI Detection</button>
             </div>
+          </div>
+
+          <div class="panel" id="tonePanel">
+            <div class="panel__title">Tone</div>
+            <div class="pillRow" role="tablist" aria-label="Tone">
+              <button class="pill is-active" type="button" data-tone="neutral" role="tab" aria-selected="true">Neutral</button>
+              <button class="pill" type="button" data-tone="casual" role="tab" aria-selected="false">Casual</button>
+              <button class="pill" type="button" data-tone="professional" role="tab" aria-selected="false">Professional</button>
+              <button class="pill" type="button" data-tone="friendly" role="tab" aria-selected="false">Friendly</button>
+              <button class="pill" type="button" data-tone="academic" role="tab" aria-selected="false">Academic</button>
+            </div>
+            <div class="helper" id="toneHelper">Tone applies to Humanize/Simplify/Rewrite/Shorten/Fix Grammar only.</div>
           </div>
 
           <div class="panel" id="keyPanel">

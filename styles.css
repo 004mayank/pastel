@@ -315,6 +315,10 @@ body {
   padding: 14px;
 }
 
+.panel.is-disabled {
+  opacity: 0.65;
+}
+
 .panel__title {
   font-weight: 650;
   color: var(--text);
