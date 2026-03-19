@@ -1,49 +1,115 @@
 # Pastel
 
-**Pastel** is a local-first writing cleaner that turns AI-sounding text into crisp, natural copy - with a calm, modern UI.
+Pastel is a Local first **post-processing tool for AI written text** that removes the subtle patterns that make writing feel artificial, heavy, or over-structured.
 
-- **100% local UI** (no backend)
-- **Standard Mode**: instant cleanup on-device
-- **AI Mode**: humanize / simplify / rewrite / shorten / fix grammar
-- **Light / Dark / System** themes (saved locally)
-- **API key stays in your browser** (localStorage)
+It’s built for text that is already complete - but still *doesn’t feel right*.
 
 ---
 
 ## What Pastel does
 
+Pastel does not generate content.
+
+It refines how your writing **reads and feels** by targeting:
+
+- robotic tone  
+- overly balanced or predictable phrasing  
+- unnecessary complexity  
+- repetition and rhythm issues  
+- tone mismatches  
+
+---
+
+## Modes
+
 ### Standard Mode (no AI)
-Cleans text locally:
-- Trims and normalizes whitespace
-- Fixes awkward line breaks
-- Normalizes punctuation spacing
-- Replaces em/en dashes with cleaner separators
 
-### AI Mode (OpenAI)
-Uses strong, action-specific prompts and returns **only the transformed text**:
-- Humanize
-- Simplify
-- Rewrite
-- Shorten
-- Fix Grammar
+Runs fully in your browser.
 
-Pastel also enforces consistent punctuation (e.g., avoids em dashes) for a more human read.
+Applies structural cleanup without changing meaning:
+
+- normalizes spacing and line flow  
+- cleans punctuation usage  
+- removes formatting noise  
+- smooths visual structure  
+
+Best for: **quick cleanup without rewriting**
+
+---
+
+### AI Mode (controlled transformations)
+
+Each action performs a **specific correction**, not a general rewrite.
+
+#### Humanize
+- removes stiffness and robotic phrasing  
+- breaks predictable sentence patterns  
+
+#### Simplify
+- reduces complexity  
+- improves clarity and flow  
+
+#### Rewrite
+- rephrases while preserving meaning  
+- avoids unnecessary stylistic drift  
+
+#### Shorten
+- removes redundancy  
+- keeps key information intact  
+
+#### Fix Grammar
+- corrects errors  
+- preserves original tone  
+
+---
+
+## Tone control
+
+Tone acts as a **constraint**, not a generator.
+
+- **Neutral** → minimal changes  
+- **Casual** → relaxed, lighter phrasing  
+- **Professional** → clear and controlled  
+- **Friendly** → softer, more natural flow  
+- **Academic** → structured and precise  
+
+---
+
+## What makes Pastel different
+
+Most tools either:
+- generate new content, or  
+- heavily rewrite existing text  
+
+Pastel focuses on:
+
+> removing detectable patterns while preserving authorship
+
+The result should feel like:
+- the same person wrote it  
+- just cleaner, smoother, and more natural  
+
+---
+
+## What it is not
+
+- not a content generator  
+- not a paraphrasing tool  
+- not a “make this sound smarter” button  
 
 ---
 
 ## Run
 
-Just open **`index.html`** in your browser.
+Open `index.html` in your browser.
 
-If your browser blocks API calls (CORS), run a tiny local server:
+If needed, run a local server:
 
-```bash
 # Python
 python3 -m http.server 5173
 
 # Node
 npx serve .
-```
 
 Then open:
 - http://localhost:5173
