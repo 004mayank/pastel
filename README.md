@@ -119,6 +119,7 @@ Then open:
 ## API Key + Security
 
 - Your OpenAI API key is stored **locally in your browser** (localStorage).
+  Ref Doc- https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key
 - It never goes anywhere except **direct requests to OpenAI**.
 
 **Do not use Pastel on shared devices**.
